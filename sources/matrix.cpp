@@ -1,20 +1,22 @@
-#include <assert.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "../headers/coloredIO.h"
+#include "../headers/inputHandler.h"
+#include "../headers/coloredOutput.h"
 #include "../headers/matrix.h"
 
 
 /**
- * @param lineNum Number of line 
- * that you processing.
+ * This function compare
+ * sizes of two matrixes.
  * 
- * @return Shift for correct 
- * processing lines of 
- * dataTriangle
+ * @return true if sizeX and
+ * sizeY of matrixes are equal.
+ * @return false in other
+ * situations.
  */
-static size_t GetTriangleShift(size_t lineNum);
+static bool AreMatrixesEqualInSize(matrix* firstMatrix, 
+                                   matrix* secondMatrix);
 
 
 void PrintMatrix(matrix* matrix) {
@@ -34,20 +36,29 @@ void PrintMatrix(matrix* matrix) {
 }
 
 
-void PrintTriangle(dataTriangle* dataTriangle) {
-    for (size_t lineNum = 1; lineNum <= dataTriangle->basementSize; lineNum++) {
-        for (size_t x = 0; x < lineNum; x++) 
-            ColoredPrintf(YELLOW, "%6d", *(dataTriangle->data + GetTriangleShift(lineNum) + x));
-        printf("\n");
+bool matrixSum(matrix* firstMatrix,
+               matrix* secondMatrix,
+               matrix* answerMatrix) {
+    if (!AreMatrixesEqualInSize(firstMatrix, secondMatrix)) {
+        fprintf(stderr, "%s: %s(): ERROR in line %d. You can't sum "
+                        "different in size matrixes.",
+                        __FILE__, __FUNCTION__, __LINE__);
+        return false;
     }
+    for (int y = 0; y < answerMatrix->sizeY; y++)
+        for (int x = 0; x < answerMatrix->sizeX; x++)
+            *(answerMatrix->data + y*answerMatrix->sizeX + x) =
+            *( firstMatrix->data + y*answerMatrix->sizeX + x) +
+            *(secondMatrix->data + y*answerMatrix->sizeX + x);
+    return true;
 }
 
 
-size_t GetTriangleSize(size_t basementSize) {
-    return (basementSize+1) * basementSize / 2;
-}
-
-
-static size_t GetTriangleShift(size_t lineNum) {
-    return (lineNum-1) * lineNum / 2;
+static bool AreMatrixesEqualInSize(matrix* firstMatrix,
+                                   matrix* secondMatrix) {
+    if (firstMatrix->sizeX == secondMatrix->sizeX &&
+        firstMatrix->sizeY == secondMatrix->sizeY   )
+        return true;
+    else 
+        return false;
 }

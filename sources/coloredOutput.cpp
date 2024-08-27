@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include "../headers/coloredIO.h"
+#include "../headers/coloredOutput.h"
 
 
 /** defines used to set colors 
@@ -21,6 +21,7 @@
  * ColoredPrintf() more universal.
  */
 static void PrintColor(color_t color);
+
 
 int ColoredPrintf(color_t color, const char* format, ...) {
     va_list args;
