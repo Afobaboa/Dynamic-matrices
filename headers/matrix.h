@@ -30,8 +30,7 @@ void PrintMatrix(matrix* matrix);
 
 /**
  * This function sum two matrixes.
- * answerMatrix = firstMatrix + 
- *                secondMatrix.
+ * answerMatrix = firstMatrix + secondMatrix.
  * 
  * @param firstMatrix  First matrix.
  * @param secondMatrix Second matrix.
@@ -39,7 +38,7 @@ void PrintMatrix(matrix* matrix);
  * result of sum.
  * 
  * @return true if addition was
- * successful.
+ * successful,
  * @return false in other
  * situations.
  */
