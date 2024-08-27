@@ -5,10 +5,16 @@
 #include <stddef.h>
 
 
+/**
+ * This struct needed to
+ * help user to interact
+ * with two-dimensional 
+ * arrays matrix[sizeY][sizeX]
+ */
 struct matrix {
-    const size_t sizeX;
-    const size_t sizeY;
-          int*   data;
+    const size_t sizeX;    /**< Width (horizon, x) of matrix       */
+    const size_t sizeY;    /**< Height (vertical, y) of matrix     */
+          int*   data;     /**< pointer to first element of matrix */
     const char*  name;
 };
 
@@ -21,8 +27,8 @@ struct dataTriangle {
 
 
 void PrintMatrix(matrix* matrix);
-void PrintDataTriangle(dataTriangle* dataTriangle);
-size_t GetTriangleArraySize(size_t basementSize);
+void PrintTriangle(dataTriangle* dataTriangle);
+size_t GetTriangleSize(size_t basementSize);
 
 
 #endif // ARRAYS_H
