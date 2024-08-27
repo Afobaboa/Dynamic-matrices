@@ -12,10 +12,10 @@
  * arrays matrix[sizeY][sizeX].
  */
 struct matrix {
-    const size_t sizeX;    /**< Width (horizon, x) of matrix.       */
-    const size_t sizeY;    /**< Height (vertical, y) of matrix.     */
-          int*   data;     /**< Pointer to first element of matrix. */
-    const char*  name;     /**< Name of matrix. Need for printing.  */
+    size_t sizeX;    /**< Width (horizon, x) of matrix.       */
+    size_t sizeY;    /**< Height (vertical, y) of matrix.     */
+    int*   data;     /**< Pointer to first element of matrix. */
+    char*  name;     /**< Name of matrix. Need for printing.  */
 };
 
 
@@ -45,6 +45,23 @@ void PrintMatrix(matrix* matrix);
 bool matrixSum(matrix* firstMatrix,
                matrix* secondMatrix,
                matrix* answerMatrix);
+
+
+/**
+ * This function print 
+ * hints to stdin for
+ * help user to initialize
+ * fields of matrix.
+ * 
+ * @param matrix Matrix that
+ * will be set.
+ * 
+ * @return true if setting 
+ * will be complete,
+ * @return false in other
+ * situations.
+ */
+bool SetMatrix(matrix* matrix);
 
 
 #endif // ARRAYS_H

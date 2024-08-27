@@ -7,6 +7,16 @@
 
 
 /**
+ * This function print 
+ * special message if user
+ * close this program.
+ */
+static void PrintEndMessage() {
+    puts("# Пока!");
+}
+
+
+/**
  * This function compare
  * sizes of two matrixes.
  * 
@@ -17,6 +27,38 @@
  */
 static bool AreMatrixesEqualInSize(matrix* firstMatrix, 
                                    matrix* secondMatrix);
+
+
+/**
+ * This function set size
+ * of matrix.
+ * 
+ * @param matri Matrix, which 
+ * size will be set.
+ * 
+ * @return true if size was set,
+ * @return false in other
+ * situations.
+ */
+static bool SetMatrixSize(matrix* matrix);
+
+
+/**
+ * This function set data
+ * of matrix. You should 
+ * set size of this matrix
+ * before using this
+ * function.
+ * 
+ * @param matrix Matrix which 
+ * data will be set.
+ * 
+ * @return true if setting
+ * is complete,
+ * @return false in other 
+ * situations.
+ */
+static bool SetMatrixData(matrix* matrix);
 
 
 void PrintMatrix(matrix* matrix) {
@@ -61,4 +103,34 @@ static bool AreMatrixesEqualInSize(matrix* firstMatrix,
         return true;
     else 
         return false;
+}
+
+
+bool SetMatrix(matrix* matrix) {
+    if (!SetMatrixSize(matrix))
+        return false;
+    if (!SetMatrixData(matrix)) 
+        return false;
+    return true;
+}
+
+
+static bool SetMatrixSize(matrix* matrix) {
+    puts("# Введите размер матрицы по горизонтали:");
+    int value = 0;
+    if (!GetIntValue(&value)) {
+        PrintEndMessage;
+        return false;
+    }
+    matrix->sizeX = (size_t) value;
+
+    puts("# Введите размер матрицы по вертикали:");
+    int value = 0;
+    if (!GetIntValue(&value)) {
+        PrintEndMessage;
+        return false;
+    }
+    matrix->sizeY = (size_t) value;
+
+    return true;
 }
