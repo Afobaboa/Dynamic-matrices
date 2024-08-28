@@ -10,7 +10,7 @@
  * of matrices element
  * that you can enter.
  */
-const int MAX_ELEM_SIZE   = 1E6;
+const int MAX_ELEM_SIZE   = 1E5;
 
 
 /** 
@@ -93,6 +93,16 @@ bool MatrixSet(Matrix* matrix);
  * you want to delete
  */
 void MatrixDelete(Matrix* matrix);
+
+
+/**
+ * Init matrix with
+ * zeroes and null.
+ * 
+ * @param matrix Matrix 
+ * that you want to init.
+ */
+void MatrixInit(Matrix* matrix);
 
 
 #endif // ARRAYS_H

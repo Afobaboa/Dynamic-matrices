@@ -84,12 +84,13 @@ static bool IsEOF() {
 
 bool SetSize(size_t* buffer) {
     while (scanf("%zu", buffer) != 1 || 
-          *buffer <= MAX_MATRIX_SIZE ||
+           *buffer > MAX_MATRIX_SIZE ||
                      !IsInputClear()   ) {
         if (IsEOF())
             return false;
-        puts("Неверный формат ввода. Возможно, вы ввели "
-              "слишком большой размер. Попробуйте еще раз.");
+        puts("# Неверный формат ввода. Возможно, вы ввели "
+              "слишком большой размер или лишние символы.\n"
+              "# Попробуйте еще раз.");
         ClearInput();
     }
     return true;
@@ -99,20 +100,20 @@ bool SetSize(size_t* buffer) {
 bool SetLine(int* const linePtr, const size_t elemCount) {
     for (size_t i = 0; i < elemCount; i++) {
         int* elem = &linePtr[i];
-        printf("Введите значения следующей строки. Они не должны "
-               "превышать %d", MAX_ELEM_SIZE);
+        printf("# Введите значения следующей строки. Они не должны "
+               "превышать %d\n", MAX_ELEM_SIZE);
         while(scanf("%d", elem) != 1 || *elem > MAX_ELEM_SIZE) {
             if (IsEOF())
                 return false;
-            printf("Не получилось получить значение %zu элемента, "
+            printf("# Не получилось получить значение %zu элемента, "
                    "Весь остальной ввод был проигнорирован.\n"
-                   "Попробуйте еще раз его ввести.\n", i);
+                   "# Попробуйте еще раз его ввести.\n", i);
             ClearInput();
         }
     }
     if (!IsInputClear()) {
-        puts("Вы ввели слишком много значений. Все они "
-             "были очищены.");
+        puts("Строка была заполнена, но вы ввели слишком много "
+             "значений. Лишние элементы были очищены.");
         ClearInput();
     }
 

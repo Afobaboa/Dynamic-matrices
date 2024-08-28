@@ -116,11 +116,11 @@ bool MatrixSum(const Matrix* firstMatrix, const Matrix* secondMatrix,
 
     answerMatrix->sizeX = firstMatrix->sizeX; // FIXME: this looks strange
     answerMatrix->sizeY = firstMatrix->sizeY;
-    answerMatrix->data = (int*) calloc(answerMatrix->sizeX * answerMatrix->sizeY,
-                                                                     sizeof(int) );
+    answerMatrix->data  = (int*) calloc(answerMatrix->sizeX * answerMatrix->sizeY,
+                                                                      sizeof(int) );
 
-    for (size_t i = 0; i < answerMatrix->sizeX + answerMatrix->sizeY; i++)
-        answerMatrix->data[i] = firstMatrix->data[i] + secondMatrix->data[i];
+    for (size_t i = 0; i < answerMatrix->sizeX * answerMatrix->sizeY; i++)
+        (answerMatrix->data)[i] = (firstMatrix->data)[i] + (secondMatrix->data)[i];
     return true;
 }
 
@@ -145,12 +145,12 @@ bool MatrixSet(Matrix* matrix) { // FIXME: bad input, needed to fix
 
 
 bool MatrixSetSize(Matrix* matrix) {
-    printf("# Введите размер матрицы по горизонтали (не больше %zu):", MAX_MATRIX_SIZE);
+    printf("# Введите размер матрицы по горизонтали (не больше %zu):\n", MAX_MATRIX_SIZE);
     if (!SetSize(&matrix->sizeX)) {
         return false;
     } 
 
-    printf("# Введите размер матрицы по вертикали (не больше %zu):", MAX_MATRIX_SIZE);
+    printf("# Введите размер матрицы по вертикали (не больше %zu):\n", MAX_MATRIX_SIZE);
     if (!SetSize(&matrix->sizeY)) {
         return false;
     }
@@ -200,4 +200,11 @@ static int* GetLinePtr(const Matrix* matrix, const size_t y) {
     if (y > matrix->sizeY) 
         return NULL;
     return matrix->data + y * matrix->sizeX;
+}
+
+
+void MatrixInit(Matrix* matrix) {
+    matrix->data  = NULL;
+    matrix->sizeX = 0;
+    matrix->sizeY = 0;
 }

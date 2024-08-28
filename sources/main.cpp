@@ -4,33 +4,24 @@
 
 
 int main() {
-    Matrix firstMatrix = { 
-        .sizeX = 0,
-        .sizeY = 0,
-        .data  = NULL
-    };
+    Matrix firstMatrix;
+    MatrixInit(&firstMatrix);
     if (!MatrixSet(&firstMatrix)) {
         printf("# Пока!\n");
         return 0;
     }
     MatrixPrint(&firstMatrix);
 
-    Matrix secondMatrix = {  // FIXME: copypaste
-        .sizeX = 0,
-        .sizeY = 0,
-        .data  = NULL
-    };
+    Matrix secondMatrix;
+    MatrixInit(&secondMatrix);
     if (!MatrixSet(&secondMatrix)) {
         printf("# Пока!\n");
         return 0;
     }
-    MatrixPrint(&firstMatrix);
+    MatrixPrint(&secondMatrix); 
 
-    Matrix sumMatrix = { 
-        .sizeX = 0,
-        .sizeY = 0,
-        .data  = NULL
-    };
+    Matrix sumMatrix;
+    MatrixInit(&sumMatrix);
     if (!MatrixSum(&firstMatrix, &secondMatrix, &sumMatrix)) {
         printf("# Мда, чел...\n");
         return 0;
