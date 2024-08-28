@@ -5,6 +5,16 @@
 
 
 /**
+ * @file
+ * This file is don't 
+ * used in my project now
+ * and you can delete it
+ * if you want to use my 
+ * program.
+ */
+
+
+/**
  * @param lineNum Number of line 
  * that you processing.
  * 

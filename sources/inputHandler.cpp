@@ -1,7 +1,9 @@
 #include <ctype.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include "../headers/inputHandler.h"
+#include "../headers/matrix.h"
 
 
 // TODO:
@@ -40,10 +42,17 @@ static void ClearInput();
 
 
 /**
- * Print special message if user 
- * write input in wrong format.
+ * This function trying
+ * to get int value from 
+ * stdin until value will be 
+ * getted or EOF is getted.
+ * 
+ * @param buffer There will be getted int value.
+ * 
+ * @return true if value was get,
+ * @return false in other situations.
  */
-static void PrintWrongInputMessage();
+bool GetIntValue(int* buffer);
 
 
 static void ClearInput() {
@@ -65,11 +74,6 @@ static bool IsInputClear() {
 }
 
 
-static void PrintWrongInputMessage() {
-    puts("# Неверный ввод. Попробуйте ввести все сначала.");
-}
-
-
 static bool IsEOF() {
     int c = getchar();
     if (c == EOF)
@@ -78,14 +82,39 @@ static bool IsEOF() {
 }
 
 
-bool GetIntValue(int* buffer) {
-    while (scanf("%d", buffer) != 1 || 
-                    !IsInputClear()   ) {
-
+bool SetSize(size_t* buffer) {
+    while (scanf("%zu", buffer) != 1 || 
+          *buffer <= MAX_MATRIX_SIZE ||
+                     !IsInputClear()   ) {
         if (IsEOF())
             return false;
-        PrintWrongInputMessage();
+        puts("Неверный формат ввода. Возможно, вы ввели "
+              "слишком большой размер. Попробуйте еще раз.");
         ClearInput();
     }
+    return true;
+}
+
+
+bool SetLine(int* const linePtr, const size_t elemCount) {
+    for (size_t i = 0; i < elemCount; i++) {
+        int* elem = &linePtr[i];
+        printf("Введите значения следующей строки. Они не должны "
+               "превышать %d", MAX_ELEM_SIZE);
+        while(scanf("%d", elem) != 1 || *elem > MAX_ELEM_SIZE) {
+            if (IsEOF())
+                return false;
+            printf("Не получилось получить значение %zu элемента, "
+                   "Весь остальной ввод был проигнорирован.\n"
+                   "Попробуйте еще раз его ввести.\n", i);
+            ClearInput();
+        }
+    }
+    if (!IsInputClear()) {
+        puts("Вы ввели слишком много значений. Все они "
+             "были очищены.");
+        ClearInput();
+    }
+
     return true;
 }
