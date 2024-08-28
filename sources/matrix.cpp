@@ -70,8 +70,8 @@ static bool MatrixSetData(Matrix* matrix);
  * @return NULL if (x,y) doesn't
  * exist in this matrix.
  */
-static int* MatrixGetElemPtr(const Matrix* matrix,
-                             const size_t x, const size_t y);
+static int MatrixGetElem(const Matrix* matrix,
+                         const size_t x, const size_t y);
 
 
 /**
@@ -101,7 +101,7 @@ void MatrixPrint(const Matrix* matrix) {
     for (size_t y = 0; y < matrix->sizeY; y++) {
         printf("y = %3zu ", y);
         for (size_t x = 0; x < matrix->sizeX; x++)
-            ColoredPrintf(YELLOW, "%6d ", *(MatrixGetElemPtr(matrix, x, y)));
+            ColoredPrintf(YELLOW, "%6d ", MatrixGetElem(matrix, x, y));
         printf("\n");
     }
 }
@@ -176,12 +176,12 @@ bool MatrixSetData(Matrix* matrix) {
 }
 
 
-static int* MatrixGetElemPtr(const Matrix* matrix,
+static int MatrixGetElem(const Matrix* matrix,
                              const size_t x, const size_t y) {
     if (x > matrix->sizeX ||
         y > matrix->sizeY   )
         return NULL;
-    return matrix->data + y * matrix->sizeX + x;
+    return matrix->data[y * matrix->sizeX + x];
 }
 
 
