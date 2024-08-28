@@ -186,8 +186,8 @@ static int* MatrixGetElemPtr(const Matrix* matrix,
 
 
 void MatrixDelete(Matrix* matrix) {
-    if (matrix->data)
-        fprintf(stderr, "%s: %s(): ERROR in line %d, data is free.",
+    if (!matrix->data)
+        fprintf(stderr, "%s: %s(): ERROR in line %d, data is free.\n",
                         __FILE__, __FUNCTION__, __LINE__);
     free(matrix->data);
     matrix->data  = NULL;
