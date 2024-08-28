@@ -112,7 +112,7 @@ static bool AreMatricesEqualInSize(const Matrix* firstMatrix,
 }
 
 
-bool MatrixSet(Matrix* matrix) {
+bool MatrixSet(Matrix* matrix) { // FIXME: bad input, needed to fix
     if (!MatrixSetSize(matrix))
         return false;
     if (!MatrixSetData(matrix)) 
