@@ -1,5 +1,7 @@
+#include <assert.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include "../headers/inputHandler.h"
 #include "../headers/coloredOutput.h"
@@ -61,6 +63,23 @@ static bool SetMatrixSize(Matrix* matrix);
 static bool MatrixSetData(Matrix* matrix);
 
 
+/**
+ * This function help you
+ * to get elems of matrix
+ * using their coordinates.
+ * 
+ * @param matrix Matrix, where will be searching.
+ * @param x      x coordinate of elem.
+ * @param y      y coordinate of elem.
+ * 
+ * @return Pointer to (x,y) elem,
+ * @return NULL if (x,y) doesn't
+ * exist in this matrix.
+ */
+static int* MatrixGetElem(const Matrix* matrix,
+                          const size_t x, const size_t y);
+
+
 void MatrixPrint(const Matrix* matrix) {
     printf("There is %s\n\n", matrix->name);
 
@@ -113,7 +132,7 @@ bool MatrixSet(Matrix* matrix) {
 }
 
 
-static bool MatrixSetSize(Matrix* matrix) {
+bool MatrixSetSize(Matrix* matrix) {
     puts("# Введите размер матрицы по горизонтали:");
     int value = 0;
     if (!GetIntValue(&value)) {
@@ -131,4 +150,29 @@ static bool MatrixSetSize(Matrix* matrix) {
     matrix->sizeY = (size_t) value;
 
     return true;
+}
+
+
+bool MatrixSetData(Matrix* matrix) {
+    assert(!matrix->data);
+    matrix->data = (int*) calloc(matrix->sizeX * matrix->sizeY,
+                                                   sizeof(int) );
+    for (size_t y = 0; y < matrix->sizeY; y++) {
+        printf("# Введите %zu строку матрицы: \n", y+1);
+        for (size_t x = 0; x < matrix->sizeX; x++) 
+            if (!GetIntValue(MatrixGetElem(matrix, x, y)))
+                return false;
+        printf("\n");
+    }
+    printf("\n");
+    return true;
+}
+
+
+static int* MatrixGetElem(const Matrix* matrix,
+                          const size_t x, const size_t y) {
+    if (x > matrix->sizeX ||
+        y > matrix->sizeY   )
+        return NULL;
+    return matrix->data + y * matrix->sizeX + x;
 }
