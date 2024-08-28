@@ -4,6 +4,11 @@
 #include "../headers/inputHandler.h"
 
 
+// TODO:
+// Заменить GetIntValue() на
+// GetIntLine() и GetSize()
+
+
 /**
  * Check is stdin clear until
  * EOF or '\n' (until nearest 
@@ -74,8 +79,8 @@ static bool IsEOF() {
 
 
 bool GetIntValue(int* buffer) {
-    while (   scanf("%d", buffer) != 1 || 
-                       !IsInputClear()   ) {
+    while (scanf("%d", buffer) != 1 || 
+                    !IsInputClear()   ) {
 
         if (IsEOF())
             return false;

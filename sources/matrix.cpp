@@ -7,7 +7,10 @@
 #include "../headers/coloredOutput.h"
 #include "../headers/matrix.h"
 
-// TODO: matrixMul (2 штуки)
+// TODO: 
+// matrixMul (2 штуки)
+// ограничить размер матриц и элементов
+// проверить нумерацию столбцов и строк везде
 
 /**
  * This function compare
@@ -67,12 +70,12 @@ static bool MatrixSetData(Matrix* matrix);
  * @return NULL if (x,y) doesn't
  * exist in this matrix.
  */
-static int* MatrixGetElem(const Matrix* matrix,
+static int* MatrixGetElemPtr(const Matrix* matrix,
                           const size_t x, const size_t y);
 
 
 void MatrixPrint(const Matrix* matrix) {
-    printf("x = %3s", "");
+    printf("x = %3s ", "");
     for (size_t x = 0; x < matrix->sizeX; x++)
         printf("%6zu ", x);
     printf("\n");
@@ -80,7 +83,7 @@ void MatrixPrint(const Matrix* matrix) {
     for (size_t y = 0; y < matrix->sizeY; y++) {
         printf("y = %3zu ", y);
         for (size_t x = 0; x < matrix->sizeX; x++)
-            ColoredPrintf(YELLOW, "%6d ", *(matrix->data + matrix->sizeX + x));
+            ColoredPrintf(YELLOW, "%6d ", *(MatrixGetElemPtr(matrix, x, y)));
         printf("\n");
     }
 }
@@ -121,7 +124,7 @@ bool MatrixSet(Matrix* matrix) {
 bool MatrixSetSize(Matrix* matrix) {
     puts("# Введите размер матрицы по горизонтали:");
     int value = 0;
-    if (!GetIntValue(&value)) {
+    if (!GetIntValue(&value)) { // FIXME: size_t can't be int* argument
         return false;
     }
     matrix->sizeX = (size_t) value;
@@ -142,9 +145,12 @@ bool MatrixSetData(Matrix* matrix) {
                                                    sizeof(int) );
     for (size_t y = 0; y < matrix->sizeY; y++) {
         printf("# Введите %zu строку матрицы: \n", y+1);
-        for (size_t x = 0; x < matrix->sizeX; x++) 
-            if (!GetIntValue(MatrixGetElem(matrix, x, y)))
+        for (size_t x = 0; x < matrix->sizeX; x++) {
+            int value = 0;
+            if (!GetIntValue(&value))
                 return false;
+            *MatrixGetElemPtr(matrix, x, y) = value; // FIXME: can be returned NULL
+        }    
         printf("\n");
     }
     printf("\n");
@@ -152,8 +158,8 @@ bool MatrixSetData(Matrix* matrix) {
 }
 
 
-static int* MatrixGetElem(const Matrix* matrix,
-                          const size_t x, const size_t y) {
+static int* MatrixGetElemPtr(const Matrix* matrix,
+                             const size_t x, const size_t y) {
     if (x > matrix->sizeX ||
         y > matrix->sizeY   )
         return NULL;
