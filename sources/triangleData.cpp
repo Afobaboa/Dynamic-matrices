@@ -12,7 +12,7 @@
  * processing lines of 
  * dataTriangle
  */
-static size_t TriangleGetShiftconst (size_t lineNum);
+static size_t TriangleGetShift(const size_t lineNum);
 
 
 void TrianglePrint(const TriangleData* triangleData) {

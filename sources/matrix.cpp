@@ -8,15 +8,6 @@
 #include "../headers/matrix.h"
 
 // TODO: matrixMul (2 штуки)
-/**
- * This function print 
- * special message if user
- * close this program.
- */
-static void PrintEndMessage() {
-    puts("# Пока!");
-}
-
 
 /**
  * This function compare
@@ -27,7 +18,7 @@ static void PrintEndMessage() {
  * @return false in other
  * situations.
  */
-static bool AreMatrixesEqualInSize(const Matrix* firstMatrix, 
+static bool AreMatricesEqualInSize(const Matrix* firstMatrix, 
                                    const Matrix* secondMatrix);
 
 
@@ -42,7 +33,7 @@ static bool AreMatrixesEqualInSize(const Matrix* firstMatrix,
  * @return false in other
  * situations.
  */
-static bool SetMatrixSize(Matrix* matrix);
+static bool MatrixSetSize(Matrix* matrix);
 
 
 /**
@@ -81,8 +72,6 @@ static int* MatrixGetElem(const Matrix* matrix,
 
 
 void MatrixPrint(const Matrix* matrix) {
-    printf("There is %s\n\n", matrix->name);
-
     printf("x = %3s", "");
     for (size_t x = 0; x < matrix->sizeX; x++)
         printf("%6zu ", x);
@@ -96,18 +85,15 @@ void MatrixPrint(const Matrix* matrix) {
     }
 }
 
-// FIXME: add function
-// int matrixGetElem(matrix, x, y);
-// void matrixSetElem(matrix, x, y, value)
-//            const
+
 bool MatrixSum(const Matrix* firstMatrix, const Matrix* secondMatrix,
                                                 Matrix* answerMatrix ) {
-    if (!AreMatrixesEqualInSize(firstMatrix, secondMatrix)) {
+    if (!AreMatricesEqualInSize(firstMatrix, secondMatrix)) {
         ColoredPrintf(RED, "Нельзя суммировать матрицы разных размеров.\n");
         return false;
     }
 
-    for (int i = 0; i < answerMatrix->sizeX + answerMatrix->sizeY; i++)
+    for (size_t i = 0; i < answerMatrix->sizeX + answerMatrix->sizeY; i++)
         answerMatrix->data[i] = firstMatrix->data[i] + secondMatrix->data[i];
     return true;
 }
@@ -136,15 +122,12 @@ bool MatrixSetSize(Matrix* matrix) {
     puts("# Введите размер матрицы по горизонтали:");
     int value = 0;
     if (!GetIntValue(&value)) {
-        PrintEndMessage;
         return false;
     }
     matrix->sizeX = (size_t) value;
 
     puts("# Введите размер матрицы по вертикали:");
-    int value = 0;
     if (!GetIntValue(&value)) {
-        PrintEndMessage;
         return false;
     }
     matrix->sizeY = (size_t) value;
@@ -175,4 +158,13 @@ static int* MatrixGetElem(const Matrix* matrix,
         y > matrix->sizeY   )
         return NULL;
     return matrix->data + y * matrix->sizeX + x;
+}
+
+
+void MatrixDelete(Matrix* matrix) {
+    assert(!matrix->data);
+    free(matrix->data);
+    matrix->data  = NULL;
+    matrix->sizeX = 0;
+    matrix->sizeY = 0;
 }

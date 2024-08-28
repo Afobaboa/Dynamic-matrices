@@ -12,10 +12,9 @@
  * arrays matrix[sizeY][sizeX].
  */
 struct Matrix {
-    size_t      sizeX;    /**< Width (horizon, x) of matrix.       */
-    size_t      sizeY;    /**< Height (vertical, y) of matrix.     */
-    int*        data;     /**< Pointer to first element of matrix. */
-    const char* name;     /**< Name of matrix. Need for printing.  */
+    size_t sizeX;    /**< Width (horizon, x) of matrix.       */
+    size_t sizeY;    /**< Height (vertical, y) of matrix.     */
+    int*   data;     /**< Pointer to first element of matrix. */
 };
 
 
@@ -61,6 +60,22 @@ bool MatrixSum(const Matrix* firstMatrix, const Matrix* secondMatrix,
  * situations.
  */
 bool MatrixSet(Matrix* matrix);
+
+
+/**
+ * This function is clear 
+ * memory and set int 
+ * parameters of matrix 
+ * to zeros and set
+ * pointer to data to NULL.
+ * 
+ * Multiple using is safe
+ * but not recomended.
+ * 
+ * @param matrix Matrix that
+ * you want to delete
+ */
+void MatrixDelete(Matrix* matrix);
 
 
 #endif // ARRAYS_H

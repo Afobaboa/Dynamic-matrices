@@ -35,7 +35,7 @@ OBJECTS_DIR=objects/
 SOURCES=$(wildcard $(SOURCES_DIR)*.cpp)
 HEADERS=$(wildcard $(HEADERS_DIR)*.h) 
 OBJECTS=$(patsubst $(SOURCES_DIR)%.cpp,$(OBJECTS_DIR)%.o,$(SOURCES))
-EXECUTABLE=playWithArrays
+EXECUTABLE=dynamicMatrices
 
 
 # making project EXECUTABLE

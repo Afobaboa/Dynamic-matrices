@@ -3,9 +3,17 @@
 #include "../headers/matrix.h"
 
 
-#define getName(var) #var
-
-
 int main() {
+    Matrix matrix = {
+        .sizeX = 0,
+        .sizeY = 0,
+        .data  = NULL
+    };
+    if (!MatrixSet(&matrix)) {
+        printf("# Пока!\n");
+        return 0;
+    }
+    MatrixPrint(&matrix);
+        
     return 0;
 }

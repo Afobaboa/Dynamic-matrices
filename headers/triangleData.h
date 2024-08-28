@@ -12,9 +12,9 @@
  * That's a triangle!
  */
 struct TriangleData {
-    size_t       basementSize;  /**< Count of element at last line.         */
-    int*         data;          /**< Pointer to first element of data.      */
-    const char*  name;          /**< Name of triangle. Needed for printing. */
+    size_t basementSize;  /**< Count of element at last line.    */
+    size_t elemsCount;    /**< Count of elements of data.        */
+    int*   data;          /**< Pointer to first element of data. */
 };
 
 
