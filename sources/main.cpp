@@ -8,6 +8,7 @@ int main() {
     MatrixInit(&firstMatrix);
     if (!MatrixSet(&firstMatrix)) {
         printf("# Пока!\n");
+        MatrixDelete(&firstMatrix);
         return 0;
     }
     MatrixPrint(&firstMatrix);
@@ -16,6 +17,8 @@ int main() {
     MatrixInit(&secondMatrix);
     if (!MatrixSet(&secondMatrix)) {
         printf("# Пока!\n");
+        MatrixDelete(&firstMatrix);
+        MatrixDelete(&secondMatrix);
         return 0;
     }
     MatrixPrint(&secondMatrix); 
@@ -24,6 +27,8 @@ int main() {
     MatrixInit(&sumMatrix);
     if (!MatrixSum(&firstMatrix, &secondMatrix, &sumMatrix)) {
         printf("# Мда, чел...\n");
+        MatrixDelete(&firstMatrix);
+        MatrixDelete(&secondMatrix);
         return 0;
     }
 

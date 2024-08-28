@@ -98,10 +98,10 @@ bool SetSize(size_t* buffer) {
 
 
 bool SetLine(int* const linePtr, const size_t elemCount) {
+    printf("# Введите значения следующей строки. Они не должны "
+           "превышать %d\n", MAX_ELEM_SIZE);
     for (size_t i = 0; i < elemCount; i++) {
         int* elem = &linePtr[i];
-        printf("# Введите значения следующей строки. Они не должны "
-               "превышать %d\n", MAX_ELEM_SIZE);
         while(scanf("%d", elem) != 1 || *elem > MAX_ELEM_SIZE) {
             if (IsEOF())
                 return false;
