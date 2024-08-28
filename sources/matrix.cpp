@@ -5,7 +5,7 @@
 #include "../headers/coloredOutput.h"
 #include "../headers/matrix.h"
 
-
+// TODO: matrixMul (2 штуки)
 /**
  * This function print 
  * special message if user
@@ -25,8 +25,8 @@ static void PrintEndMessage() {
  * @return false in other
  * situations.
  */
-static bool AreMatrixesEqualInSize(matrix* firstMatrix, 
-                                   matrix* secondMatrix);
+static bool AreMatrixesEqualInSize(const Matrix* firstMatrix, 
+                                   const Matrix* secondMatrix);
 
 
 /**
@@ -40,7 +40,7 @@ static bool AreMatrixesEqualInSize(matrix* firstMatrix,
  * @return false in other
  * situations.
  */
-static bool SetMatrixSize(matrix* matrix);
+static bool SetMatrixSize(Matrix* matrix);
 
 
 /**
@@ -58,10 +58,10 @@ static bool SetMatrixSize(matrix* matrix);
  * @return false in other 
  * situations.
  */
-static bool SetMatrixData(matrix* matrix);
+static bool MatrixSetData(Matrix* matrix);
 
 
-void PrintMatrix(matrix* matrix) {
+void MatrixPrint(const Matrix* matrix) {
     printf("There is %s\n\n", matrix->name);
 
     printf("x = %3s", "");
@@ -77,27 +77,25 @@ void PrintMatrix(matrix* matrix) {
     }
 }
 
-
-bool matrixSum(matrix* firstMatrix,
-               matrix* secondMatrix,
-               matrix* answerMatrix) {
+// FIXME: add function
+// int matrixGetElem(matrix, x, y);
+// void matrixSetElem(matrix, x, y, value)
+//            const
+bool MatrixSum(const Matrix* firstMatrix, const Matrix* secondMatrix,
+                                                Matrix* answerMatrix ) {
     if (!AreMatrixesEqualInSize(firstMatrix, secondMatrix)) {
-        fprintf(stderr, "%s: %s(): ERROR in line %d. You can't sum "
-                        "different in size matrixes.",
-                        __FILE__, __FUNCTION__, __LINE__);
+        ColoredPrintf(RED, "Нельзя суммировать матрицы разных размеров.\n");
         return false;
     }
-    for (int y = 0; y < answerMatrix->sizeY; y++)
-        for (int x = 0; x < answerMatrix->sizeX; x++)
-            *(answerMatrix->data + y*answerMatrix->sizeX + x) =
-            *( firstMatrix->data + y*answerMatrix->sizeX + x) +
-            *(secondMatrix->data + y*answerMatrix->sizeX + x);
+
+    for (int i = 0; i < answerMatrix->sizeX + answerMatrix->sizeY; i++)
+        answerMatrix->data[i] = firstMatrix->data[i] + secondMatrix->data[i];
     return true;
 }
 
 
-static bool AreMatrixesEqualInSize(matrix* firstMatrix,
-                                   matrix* secondMatrix) {
+static bool AreMatricesEqualInSize(const Matrix* firstMatrix,
+                                   const Matrix* secondMatrix) {
     if (firstMatrix->sizeX == secondMatrix->sizeX &&
         firstMatrix->sizeY == secondMatrix->sizeY   )
         return true;
@@ -106,16 +104,16 @@ static bool AreMatrixesEqualInSize(matrix* firstMatrix,
 }
 
 
-bool SetMatrix(matrix* matrix) {
-    if (!SetMatrixSize(matrix))
+bool MatrixSet(Matrix* matrix) {
+    if (!MatrixSetSize(matrix))
         return false;
-    if (!SetMatrixData(matrix)) 
+    if (!MatrixSetData(matrix)) 
         return false;
     return true;
 }
 
 
-static bool SetMatrixSize(matrix* matrix) {
+static bool MatrixSetSize(Matrix* matrix) {
     puts("# Введите размер матрицы по горизонтали:");
     int value = 0;
     if (!GetIntValue(&value)) {

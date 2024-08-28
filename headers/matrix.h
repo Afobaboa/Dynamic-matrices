@@ -11,11 +11,11 @@
  * with two-dimensional 
  * arrays matrix[sizeY][sizeX].
  */
-struct matrix {
-    size_t sizeX;    /**< Width (horizon, x) of matrix.       */
-    size_t sizeY;    /**< Height (vertical, y) of matrix.     */
-    int*   data;     /**< Pointer to first element of matrix. */
-    char*  name;     /**< Name of matrix. Need for printing.  */
+struct Matrix {
+    size_t      sizeX;    /**< Width (horizon, x) of matrix.       */
+    size_t      sizeY;    /**< Height (vertical, y) of matrix.     */
+    int*        data;     /**< Pointer to first element of matrix. */
+    const char* name;     /**< Name of matrix. Need for printing.  */
 };
 
 
@@ -25,7 +25,7 @@ struct matrix {
  * 
  * @param matrix Matrix to print.
  */
-void PrintMatrix(matrix* matrix);
+void MatrixPrint(const Matrix* matrix);
 
 
 /**
@@ -42,9 +42,8 @@ void PrintMatrix(matrix* matrix);
  * @return false in other
  * situations.
  */
-bool matrixSum(matrix* firstMatrix,
-               matrix* secondMatrix,
-               matrix* answerMatrix);
+bool MatrixSum(const Matrix* firstMatrix, const Matrix* secondMatrix,
+                                                Matrix* answerMatrix );
 
 
 /**
@@ -61,7 +60,7 @@ bool matrixSum(matrix* firstMatrix,
  * @return false in other
  * situations.
  */
-bool SetMatrix(matrix* matrix);
+bool MatrixSet(Matrix* matrix);
 
 
 #endif // ARRAYS_H

@@ -11,9 +11,9 @@
  * isn't a rectangle. 
  * That's a triangle!
  */
-struct dataTriangle {
-    const size_t basementSize;  /**< Count of element at last line.         */
-          int*   data;          /**< Pointer to first element of data.      */
+struct TriangleData {
+    size_t       basementSize;  /**< Count of element at last line.         */
+    int*         data;          /**< Pointer to first element of data.      */
     const char*  name;          /**< Name of triangle. Needed for printing. */
 };
 
@@ -23,9 +23,9 @@ struct dataTriangle {
  * data of triangle using
  * triangle shape!!!
  * 
- * @param dataTriangle Triangle to print.
+ * @param triangleData Triangle to print.
  */
-void PrintTriangle(dataTriangle* dataTriangle);
+void TrianglePrint(const TriangleData* triangleData);
 
 
 /**
@@ -38,7 +38,7 @@ void PrintTriangle(dataTriangle* dataTriangle);
  * @return Count of all elements
  * form data.
  */
-size_t GetTriangleSize(size_t basementSize);
+size_t TriangleGetSize(const size_t basementSize);
 
 
 #endif // DATA_TRIANGLE_H

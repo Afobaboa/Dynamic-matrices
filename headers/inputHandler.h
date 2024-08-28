@@ -13,7 +13,7 @@
  * @return true if value was get,
  * @return false in other situations.
  */
-bool GetIntValue(int* buffer)
+bool GetIntValue(int* buffer);
 
 
 #endif // INPUT_HANDLER_H
