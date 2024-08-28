@@ -1,5 +1,5 @@
-#ifndef ARRAYS_H
-#define ARRAYS_H
+#ifndef MATRIX_H
+#define MATRIX_H
 
 
 #include <stddef.h>
@@ -105,4 +105,4 @@ void MatrixDelete(Matrix* matrix);
 void MatrixInit(Matrix* matrix);
 
 
-#endif // ARRAYS_H
+#endif // MATRIX_H

@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -101,7 +100,7 @@ void MatrixPrint(const Matrix* matrix) {
     for (size_t y = 0; y < matrix->sizeY; y++) {
         printf("y = %3zu ", y);
         for (size_t x = 0; x < matrix->sizeX; x++)
-            ColoredPrintf(YELLOW, "%6d ", MatrixGetElem(matrix, x, y));
+            ColoredPrintf(YELLOW, "%6d ", MatrixGetElem(matrix, x, y)); // FIXME: error handling
         printf("\n");
     }
 }
@@ -178,9 +177,8 @@ bool MatrixSetData(Matrix* matrix) {
 
 static int MatrixGetElem(const Matrix* matrix,
                              const size_t x, const size_t y) {
-    if (x > matrix->sizeX ||
-        y > matrix->sizeY   )
-        return NULL;
+    assert(!(x > matrix->sizeX ||
+             y > matrix->sizeY   ));
     return matrix->data[y * matrix->sizeX + x];
 }
 
@@ -204,6 +202,8 @@ static int* GetLinePtr(const Matrix* matrix, const size_t y) {
 
 
 void MatrixInit(Matrix* matrix) {
+    if (!matrix->data)
+        free(matrix->data);
     matrix->data  = NULL;
     matrix->sizeX = 0;
     matrix->sizeY = 0;
