@@ -69,10 +69,11 @@ static bool JaggedArraySetLine(JaggedArray* array, const size_t lineNum);
 bool JaggedArraySet(JaggedArray* array) {
     if (!JaggedArraySetLineCount(array))
         return false;
+
     for (size_t lineNum = 0; lineNum < array->lineCount; lineNum++) 
         if (!JaggedArraySetLine(array, lineNum))
             return false;
-
+    
     return true;
 }
 
@@ -98,7 +99,7 @@ void JaggedArrayInit(JaggedArray* array) {
 
 void JaggedArrayDelete(JaggedArray* array) {
     for (size_t lineNum = 0; lineNum < array->lineCount; lineNum++) {
-        free(array->lineStart);
+        free(array->lineStart[lineNum]);
         array->lineStart[lineNum] = NULL;
     }
     free(array->lineStart);
@@ -112,9 +113,16 @@ void JaggedArrayDelete(JaggedArray* array) {
 
 static bool JaggedArraySetLineCount(JaggedArray* array) {
     printf("# Введите количество строк рваного массива, "
-           "не превышающее %zu:", MAX_LINE_COUNT);
+           "не превышающее %zu:\n", MAX_LINE_COUNT);
+
     if (!SetSize(&array->lineCount, MAX_LINE_COUNT))
-        return false;    
+        return false; 
+    
+    array->lineLength = (size_t*) calloc(array->lineCount, sizeof(size_t));
+    array->lineStart  = (int**)   calloc(array->lineCount, sizeof(int*)); // FEXME: NULL handling
+
+    assert(array->lineLength);
+    assert(array->lineStart);
 
     return true;
 }
@@ -122,26 +130,18 @@ static bool JaggedArraySetLineCount(JaggedArray* array) {
 
 static bool JaggedArraySetLine(JaggedArray* array, const size_t lineNum) {
     printf("# Введите количество элементов в %zu строке. "
-           "Оно не должно превышать %zu.", lineNum, MAX_LINE_LENGTH);
-    if (!SetSize(array->lineLength + lineNum, MAX_LINE_LENGTH))
+           "Оно не должно превышать %zu.\n", lineNum, MAX_LINE_LENGTH);
+
+    assert(&(array->lineLength)[lineNum]);
+    if (!SetSize(&(array->lineLength)[lineNum], MAX_LINE_LENGTH))
         return false;
 
-    array->lineStart[lineNum] = (int*) calloc(array->lineLength[lineNum], // FIXME: add NULL handling
-                                                             sizeof(int) );
+    array->lineStart[lineNum] = (int*) calloc(array->lineLength[lineNum], sizeof(int)); // FIXME: add null handling
+    assert(array->lineStart[lineNum]);
+
     if (!SetLine(array->lineStart[lineNum], array->lineLength[lineNum], 
-                                                        MAX_ELEM_VALUE ))
+                                                       MAX_ELEM_VALUE))
         return false;
     
-    return true;
-}
-
-
-bool JaggedArraySet(JaggedArray* array) {
-    if (!JaggedArraySetLineCount(array)) 
-        return false;
-    for (size_t lineNum = 0; lineNum < array->lineCount; lineNum++)
-        if (!JaggedArraySetLine(array, lineNum))
-            return false;
-
     return true;
 }

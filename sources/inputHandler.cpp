@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -41,20 +42,6 @@ static bool IsEOF();
 static void ClearInput();
 
 
-/**
- * This function trying
- * to get int value from 
- * stdin until value will be 
- * getted or EOF is getted.
- * 
- * @param buffer There will be getted int value.
- * 
- * @return true if value was get,
- * @return false in other situations.
- */
-bool GetIntValue(int* buffer);
-
-
 static void ClearInput() {
     int c = getchar();
     while (c != '\n' && c != EOF) 
@@ -83,6 +70,7 @@ static bool IsEOF() {
 
 
 bool SetSize(size_t* buffer, const size_t maxBufferSize) {
+    assert(buffer);
     while (scanf("%zu", buffer) != 1 || 
              *buffer > maxBufferSize ||
                      !IsInputClear()   ) {
@@ -97,17 +85,16 @@ bool SetSize(size_t* buffer, const size_t maxBufferSize) {
 }
 
 
-bool SetLine(int* const linePtr, const size_t elemCount, const int maxElemValue) {
+bool SetLine(int* const linePtr, const size_t lineLength, const int maxElemValue) {
     printf("# Введите значения элементов следующей строки. Они не должны "
            "превышать %d\n", maxElemValue);
-    for (size_t i = 0; i < elemCount; i++) {
-        int* elem = &linePtr[i];
-        while(scanf("%d", elem) != 1 || *elem > maxElemValue) {
+    for (size_t elemNum = 0; elemNum < lineLength; elemNum++) {
+        while(scanf("%d", &linePtr[elemNum]) != 1 || linePtr[elemNum] > maxElemValue) {
             if (IsEOF())
                 return false;
             printf("# Не получилось получить значение %zu элемента, "
                    "Весь остальной ввод был проигнорирован.\n"
-                   "# Попробуйте еще раз его ввести.\n", i);
+                   "# Попробуйте еще раз его ввести.\n", elemNum);
             ClearInput();
         }
     }
@@ -118,4 +105,22 @@ bool SetLine(int* const linePtr, const size_t elemCount, const int maxElemValue)
     }
 
     return true;
+}
+
+
+menuMode_t GetMode() {
+    menuMode_t mode;
+    printf("Выберите действие:\n"
+           "%d - суммирование матриц.\n"
+           "%d - вывод рваного массива.\n",
+           MATRIX_SUMMATION, JAGGED_ARRAY_PRINTING);
+    while (scanf("%d", &mode) != 1 || 
+                   !IsInputClear()   ) {
+        if (IsEOF())
+            return END_INPUT;
+        puts("# Неверный формат ввода."
+             "# Попробуйте еще раз."   );
+        ClearInput();
+    }
+    return mode;
 }

@@ -3,6 +3,34 @@
 
 
 /**
+ * This enum contain 
+ * main menu modes 
+ * which processing 
+ * in main.cpp.
+ */
+enum MODE {
+    MATRIX_SUMMATION = 1,    /**< Summation of two costom matrices. */
+    JAGGED_ARRAY_PRINTING,   /**< Printig costom jagged arrray.     */
+    END_INPUT                /**< End of unput.                     */
+};
+typedef enum MODE menuMode_t;
+
+
+/** 
+ * This function print 
+ * some hints for user
+ * to terminal and get 
+ * choosed mode of program
+ * from stdin.
+ * 
+ * @return Mode status.
+ * You should process 
+ * this mode yourself.
+ */
+menuMode_t GetMode();
+
+
+/**
  * This function trying
  * to get size_t value from 
  * stdin until value will be 

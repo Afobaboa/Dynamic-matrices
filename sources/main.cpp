@@ -1,15 +1,36 @@
 #include <assert.h>
 #include <stdio.h>
+#include "../headers/inputHandler.h"
+#include "../headers/jaggedArray.h"
 #include "../headers/matrix.h"
 
 
+static void MatrixSummation();
+static void JaggedArrayPrinting();
+static void ProcessMode(menuMode_t mode);
+
+
 int main() {
+    puts("# Привет! Эту программу можно использовать как калькулятор матриц или "
+         "принтер рваных массивов.\n"
+         "# НЕ ЗАБУДЬ: для выхода из программы жми ctrl+D");
+
+    menuMode_t mode = GetMode();
+    ProcessMode(mode);
+
+    puts("# Пока");
+        
+    return 0;
+}
+
+
+static void MatrixSummation() {
     Matrix firstMatrix;
     MatrixInit(&firstMatrix);
     if (!MatrixSet(&firstMatrix)) {
         printf("# Пока!\n");
         MatrixDelete(&firstMatrix);
-        return 0;
+        return;
     }
     MatrixPrint(&firstMatrix);
 
@@ -19,7 +40,7 @@ int main() {
         printf("# Пока!\n");
         MatrixDelete(&firstMatrix);
         MatrixDelete(&secondMatrix);
-        return 0;
+        return;
     }
     MatrixPrint(&secondMatrix); 
 
@@ -29,7 +50,7 @@ int main() {
         printf("# Мда, чел...\n");
         MatrixDelete(&firstMatrix);
         MatrixDelete(&secondMatrix);
-        return 0;
+        return;
     }
 
     printf("Результат сложения матриц:\n");
@@ -38,6 +59,32 @@ int main() {
     MatrixDelete(&firstMatrix);
     MatrixDelete(&secondMatrix);
     MatrixDelete(&sumMatrix);
-        
-    return 0;
+}
+
+
+static void JaggedArrayPrinting() {
+    JaggedArray array;
+    JaggedArrayInit(&array);
+    if (!JaggedArraySet(&array))
+        return;
+    JaggedArrayPrint(&array);
+    JaggedArrayDelete(&array);
+}
+
+
+static void ProcessMode(menuMode_t mode) {
+    switch (mode) {
+    case MATRIX_SUMMATION:
+        MatrixSummation();
+        break;
+    case JAGGED_ARRAY_PRINTING:
+        JaggedArrayPrinting();
+        break;
+    case END_INPUT:
+        break;
+    default:
+        fprintf(stderr, "%s: %s(): ERROR in line %d, mode isn't defined.",
+                        __FILE__, __FUNCTION__, __LINE__                  );
+        break;
+    }
 }
