@@ -7,25 +7,7 @@
 #include "../headers/matrix.h"
 
 // TODO:
-// ограничить размер матриц и элементов
 // проверить нумерацию столбцов и строк везде
-
-
-/**
- * This is max value 
- * of matrices element
- * that you can enter.
- */
-const int MAX_ELEM_SIZE   = 1E5;
-
-
-/** 
- * This is max value 
- * of sizeX or sizeY 
- * of matrices that
- * you can enter.
- */
-const size_t MAX_MATRIX_SIZE = 5;
 
 
 /**
@@ -161,13 +143,13 @@ bool MatrixSet(Matrix* matrix) { // FIXME: bad input, needed to fix
 
 
 bool MatrixSetSize(Matrix* matrix) {
-    printf("# Введите размер матрицы по горизонтали (не больше %zu):\n", MAX_MATRIX_SIZE);
-    if (!SetSize(&matrix->sizeX, MAX_MATRIX_SIZE)) {
+    puts("# Введите размер матрицы по горизонтали:");
+    if (!SetSize(&matrix->sizeX)) {
         return false;
     } 
 
-    printf("# Введите размер матрицы по вертикали (не больше %zu):\n", MAX_MATRIX_SIZE);
-    if (!SetSize(&matrix->sizeY, MAX_MATRIX_SIZE)) {
+    puts("# Введите размер матрицы по вертикали:");
+    if (!SetSize(&matrix->sizeY)) {
         return false;
     }
 
@@ -183,8 +165,8 @@ bool MatrixSetData(Matrix* matrix) {
     matrix->data = (int*) calloc(matrix->sizeX * matrix->sizeY,
                                                    sizeof(int) );
     for (size_t y = 0; y < matrix->sizeY; y++) {
-        printf("# Введите %zu строку матрицы: \n", y+1);
-        if (!SetLine(GetLinePtr(matrix, y), matrix->sizeX, MAX_ELEM_SIZE))
+        printf("# Введите %zu строку матрицы: \n", y);
+        if (!SetLine(GetLinePtr(matrix, y), matrix->sizeX))
                 return false;
     }
     printf("\n");

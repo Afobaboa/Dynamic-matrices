@@ -69,27 +69,27 @@ static bool IsEOF() {
 }
 
 
-bool SetSize(size_t* buffer, const size_t maxBufferSize) {
+bool SetSize(size_t* buffer) {
     assert(buffer);
-    while (scanf("%zu", buffer) != 1 || 
-             *buffer > maxBufferSize ||
-                     !IsInputClear()   ) {
+    while (scanf("%zu", buffer) != 1 ||
+                       !IsInputClear()) {
         if (IsEOF())
             return false;
-        puts("# Неверный формат ввода. Возможно, вы ввели "
-              "слишком большой размер или лишние символы.\n"
-              "# Попробуйте еще раз.");
+        puts("# Неверный формат ввода. Возможно, вы ввели лишние символы.\n"
+             "# Попробуйте еще раз.");
         ClearInput();
     }
     return true;
 }
 
 
-bool SetLine(int* const linePtr, const size_t lineLength, const int maxElemValue) {
-    printf("# Введите значения элементов следующей строки. Они не должны "
-           "превышать %d\n", maxElemValue);
+bool SetLine(int* const linePtr, const size_t lineLength) {
+    if (lineLength == 0)
+        return true;
+
+    puts("# Введите значения элементов следующей строки.");
     for (size_t elemNum = 0; elemNum < lineLength; elemNum++) {
-        while(scanf("%d", &linePtr[elemNum]) != 1 || linePtr[elemNum] > maxElemValue) {
+        while(scanf("%d", &linePtr[elemNum]) != 1) {
             if (IsEOF())
                 return false;
             printf("# Не получилось получить значение %zu элемента, "
@@ -115,7 +115,7 @@ menuMode_t GetMode() {
            "%d - вывод рваного массива.\n",
            MATRIX_SUMMATION, JAGGED_ARRAY_PRINTING);
     while (scanf("%d", &mode) != 1 || 
-                   !IsInputClear()   ) {
+                     !IsInputClear()) {
         if (IsEOF())
             return END_INPUT;
         puts("# Неверный формат ввода."

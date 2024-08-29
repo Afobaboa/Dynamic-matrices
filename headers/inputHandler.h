@@ -42,7 +42,7 @@ menuMode_t GetMode();
  * @return true if value was get,
  * @return false in other situations.
  */
-bool SetSize(size_t* buffer, const size_t maxBufferSize);
+bool SetSize(size_t* buffer);
 
 
 /**
@@ -59,7 +59,7 @@ bool SetSize(size_t* buffer, const size_t maxBufferSize);
  * @return false in other 
  * situations.
  */
-bool SetLine(int* const linePtr, const size_t elemCount, const int maxElemSize);
+bool SetLine(int* const linePtr, const size_t elemCount);
 
 
 #endif // INPUT_HANDLER_H

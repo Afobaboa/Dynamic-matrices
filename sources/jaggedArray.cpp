@@ -6,28 +6,6 @@
 
 
 /**
- * This is max value of 
- * JaggedArray.lineCount.
- */
-const size_t MAX_LINE_COUNT = 8;
-
-
-/** 
- * This is max value of 
- * *(JaggedArray.lineLength)
- * for each line
- */
-const size_t MAX_LINE_LENGTH = 8;
-
-
-/**
- * This is max value of each
- * elem in each line.
- */
-const size_t MAX_ELEM_VALUE = 1E4;
-
-
-/**
  * This function asks 
  * user how many lines 
  * he want in his array.
@@ -79,6 +57,7 @@ bool JaggedArraySet(JaggedArray* array) {
 
 
 void JaggedArrayPrint(JaggedArray* array) {
+    printf("\n");
     for (size_t lineNum = 0; lineNum < array->lineCount; lineNum++) {
         for (size_t elemNum = 0; elemNum < array->lineLength[lineNum]; elemNum++)
             printf("%d ", array->lineStart[lineNum][elemNum]);   // FIXME: make more safe
@@ -112,10 +91,9 @@ void JaggedArrayDelete(JaggedArray* array) {
 
 
 static bool JaggedArraySetLineCount(JaggedArray* array) {
-    printf("# Введите количество строк рваного массива, "
-           "не превышающее %zu:\n", MAX_LINE_COUNT);
+    puts("# Введите количество строк рваного массива:");
 
-    if (!SetSize(&array->lineCount, MAX_LINE_COUNT))
+    if (!SetSize(&array->lineCount))
         return false; 
     
     array->lineLength = (size_t*) calloc(array->lineCount, sizeof(size_t));
@@ -129,18 +107,16 @@ static bool JaggedArraySetLineCount(JaggedArray* array) {
 
 
 static bool JaggedArraySetLine(JaggedArray* array, const size_t lineNum) {
-    printf("# Введите количество элементов в %zu строке. "
-           "Оно не должно превышать %zu.\n", lineNum, MAX_LINE_LENGTH);
+    printf("# Введите количество элементов в %zu строке.\n", lineNum);
 
     assert(&(array->lineLength)[lineNum]);
-    if (!SetSize(&(array->lineLength)[lineNum], MAX_LINE_LENGTH))
+    if (!SetSize(&(array->lineLength)[lineNum]))
         return false;
 
     array->lineStart[lineNum] = (int*) calloc(array->lineLength[lineNum], sizeof(int)); // FIXME: add null handling
     assert(array->lineStart[lineNum]);
 
-    if (!SetLine(array->lineStart[lineNum], array->lineLength[lineNum], 
-                                                       MAX_ELEM_VALUE))
+    if (!SetLine(array->lineStart[lineNum], array->lineLength[lineNum]))
         return false;
     
     return true;
