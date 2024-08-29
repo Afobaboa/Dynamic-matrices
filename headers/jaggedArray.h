@@ -11,7 +11,7 @@
 struct JaggedArray {
     size_t  lineCount;   /**< Count of lines.                       */
     int**   lineStart;   /**< Array of pointers to starts of lines. */
-    size_t* lineSize;    /**< Array of sizes of lines.              */
+    size_t* lineLength;  /**< Array of sizes of lines.              */
 };
 
 
@@ -29,7 +29,19 @@ struct JaggedArray {
  * @return false in other
  * situations.
  */
-bool JaggedArraySet(JaggedArray* array);
+bool JaggedArraySet(JaggedArray* array); 
+
+
+/**
+ * This function prints
+ * JaggedArray. Each line
+ * is beginning by new
+ * line.
+ * 
+ * @param jaggedArray Array
+ * you want to print.
+ */
+void JaggedArrayPrint(JaggedArray* array);
 
 
 /**

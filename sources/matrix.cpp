@@ -12,6 +12,23 @@
 
 
 /**
+ * This is max value 
+ * of matrices element
+ * that you can enter.
+ */
+const int MAX_ELEM_SIZE   = 1E5;
+
+
+/** 
+ * This is max value 
+ * of sizeX or sizeY 
+ * of matrices that
+ * you can enter.
+ */
+const size_t MAX_MATRIX_SIZE = 5;
+
+
+/**
  * This function compare
  * sizes of two matrixes.
  * 
@@ -145,12 +162,12 @@ bool MatrixSet(Matrix* matrix) { // FIXME: bad input, needed to fix
 
 bool MatrixSetSize(Matrix* matrix) {
     printf("# Введите размер матрицы по горизонтали (не больше %zu):\n", MAX_MATRIX_SIZE);
-    if (!SetSize(&matrix->sizeX)) {
+    if (!SetSize(&matrix->sizeX, MAX_MATRIX_SIZE)) {
         return false;
     } 
 
     printf("# Введите размер матрицы по вертикали (не больше %zu):\n", MAX_MATRIX_SIZE);
-    if (!SetSize(&matrix->sizeY)) {
+    if (!SetSize(&matrix->sizeY, MAX_MATRIX_SIZE)) {
         return false;
     }
 

@@ -6,23 +6,6 @@
 
 
 /**
- * This is max value 
- * of matrices element
- * that you can enter.
- */
-const int MAX_ELEM_SIZE   = 1E5;
-
-
-/** 
- * This is max value 
- * of sizeX or sizeY 
- * of matrices that
- * you can enter.
- */
-const size_t MAX_MATRIX_SIZE = 5;
-
-
-/**
  * This struct needed to
  * help user to interact
  * with two-dimensional 

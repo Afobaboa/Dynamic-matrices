@@ -6,6 +6,16 @@
 
 
 /**
+ * @file
+ * This file is don't 
+ * used in my project now
+ * and you can delete it
+ * if you want to use my 
+ * program.
+ */
+
+
+/**
  * This struct is like 
  * matrix, but its shape
  * isn't a rectangle. 

@@ -82,9 +82,9 @@ static bool IsEOF() {
 }
 
 
-bool SetSize(size_t* buffer) {
+bool SetSize(size_t* buffer, const size_t maxBufferSize) {
     while (scanf("%zu", buffer) != 1 || 
-           *buffer > MAX_MATRIX_SIZE ||
+             *buffer > maxBufferSize ||
                      !IsInputClear()   ) {
         if (IsEOF())
             return false;
@@ -97,12 +97,12 @@ bool SetSize(size_t* buffer) {
 }
 
 
-bool SetLine(int* const linePtr, const size_t elemCount) {
-    printf("# Введите значения следующей строки. Они не должны "
-           "превышать %d\n", MAX_ELEM_SIZE);
+bool SetLine(int* const linePtr, const size_t elemCount, const int maxElemValue) {
+    printf("# Введите значения элементов следующей строки. Они не должны "
+           "превышать %d\n", maxElemValue);
     for (size_t i = 0; i < elemCount; i++) {
         int* elem = &linePtr[i];
-        while(scanf("%d", elem) != 1 || *elem > MAX_ELEM_SIZE) {
+        while(scanf("%d", elem) != 1 || *elem > maxElemValue) {
             if (IsEOF())
                 return false;
             printf("# Не получилось получить значение %zu элемента, "
