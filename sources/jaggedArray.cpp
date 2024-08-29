@@ -44,6 +44,23 @@ static bool JaggedArraySetLineCount(JaggedArray* array);
 static bool JaggedArraySetLine(JaggedArray* array, const size_t lineNum);
 
 
+/** 
+ * This function find elem
+ * with max length and return
+ * its length.
+ */
+static size_t JaggedArrayFindMaxElemLength(const JaggedArray* array);
+
+
+/**
+ * This function find
+ * the longest elem (abs
+ * of elem) from array
+ * and return this elem.
+ */
+static int JaggedArrayFindLongestElem(const JaggedArray* array);
+
+
 bool JaggedArraySet(JaggedArray* array) {
     if (!JaggedArraySetLineCount(array))
         return false;
@@ -120,4 +137,30 @@ static bool JaggedArraySetLine(JaggedArray* array, const size_t lineNum) {
         return false;
     
     return true;
+}
+
+
+static size_t JaggedArrayFindMaxElemLength(const JaggedArray* array) {
+    assert(array);
+
+    size_t maxLength = 0;
+    int    longestElem = JaggedArrayFindLongestElem(array);
+
+    while (longestElem /= 10) 
+        maxLength++;
+    maxLength++;
+}
+
+
+static int JaggedArrayFindLongestElem(const JaggedArray*  array) {
+    assert(array);
+
+    int maxElem = 0;
+    for (size_t lineNum = 0; lineNum < array->lineCount; lineNum++) 
+        for (size_t elemNum = 0; elemNum < array->lineLength[lineNum]; elemNum++) 
+            if (abs(array->lineStart[lineNum][elemNum]) > maxElem) 
+                maxElem = array->lineStart[lineNum][elemNum];
+    
+
+    return maxElem;    
 }
