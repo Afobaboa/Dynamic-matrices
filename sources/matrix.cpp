@@ -184,7 +184,7 @@ bool MatrixSetData(Matrix* matrix) {
                                                    sizeof(int) );
     for (size_t y = 0; y < matrix->sizeY; y++) {
         printf("# Введите %zu строку матрицы: \n", y+1);
-        if (!SetLine(GetLinePtr(matrix, y), matrix->sizeX))
+        if (!SetLine(GetLinePtr(matrix, y), matrix->sizeX, MAX_ELEM_SIZE))
                 return false;
     }
     printf("\n");

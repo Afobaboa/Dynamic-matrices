@@ -126,6 +126,8 @@ static bool JaggedArraySetLine(JaggedArray* array, const size_t lineNum) {
     if (!SetSize(array->lineLength + lineNum, MAX_LINE_LENGTH))
         return false;
 
+    array->lineStart[lineNum] = (int*) calloc(array->lineLength[lineNum], // FIXME: add NULL handling
+                                                             sizeof(int) );
     if (!SetLine(array->lineStart[lineNum], array->lineLength[lineNum], 
                                                         MAX_ELEM_VALUE ))
         return false;
